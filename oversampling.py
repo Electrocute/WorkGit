@@ -1,6 +1,6 @@
 import filecmp
 import os
-from bitstring import Bits
+from bitstring import Bits, BitStream
 
 original_file = input("Enter the file you wish to over sample: ");
 print("the file you want to oversample is:", original_file);
@@ -14,10 +14,10 @@ new_file = open(final_product, 'wb');
 
 file_statistics = os.stat(original_file)
 file_length = file_statistics.st_size
-file_length_binary = file_length * 7
+file_length_binary = file_length * 8
 
-old_file_binary = Bits(old_file)
-new_file_binary = Bits(new_file)
+old_file_binary = BitStream(old_file)
+new_file_binary = BitStream(new_file)
 i=0
 
 while j<file_length_binary :
