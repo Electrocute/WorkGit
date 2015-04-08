@@ -16,8 +16,13 @@ new_file = open(final_product, 'wb');
 
 file_length_binary = file_size * 8
 
-old_file_binary_read = BitStream(old_file)
-new_file_binary_read = BitStream()
+with open("myfile", "rb") as f:
+    byte = f.read(1)
+    while byte:
+        # Do stuff with byte.
+        byte = f.read(1)
+
+
 
 
 i=0
