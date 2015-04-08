@@ -16,11 +16,9 @@ new_file = open(final_product, 'wb');
 
 file_length_binary = file_size * 8
 
-old_file_binary_read = Bits(old_file)
-new_file_binary_read = Bits(new_file)
+old_file_binary_read = BitStream(old_file)
+new_file_binary_read = BitStream()
 
-old_file_binary = BitArray(old_file_binary_read)
-new_file_binary = BitArray(new_file_binary_read)
 
 i=0
 j=0
@@ -36,4 +34,4 @@ for j in range(file_length_binary) :
 			new_file_binary.insert(0b0, new_file_placekeeper)
 			new_file_placekeeper = new_file_placekeeper + 1
 
-new_file.write(new_file_binary)
+new_file_binary.tofile(new_file)
