@@ -11,18 +11,22 @@ n = 0
 n = input("Rate of oversampling: ")
 
 
-mask_1 = 0x8  # 0b1000
-mask_2 = 0x4  # 0b0100
-mask_3 = 0x2  # 0b0010 
-mask_4 = 0x1  # 0b0001 
+mask_1 = 0b1000
+mask_2 = 0b0100
+mask_3 = 0b0010 
+mask_4 = 0b0001 
+change_1 = 0b1000
+change_2 = 0b1100
+change_3 = 0b1110
+
 remainder = 0
 value = 0
 
 old_file = open(original_file, 'wb');
 new_file = open(final_product, 'wb');
 
-def writeBits
-	number = n+remainder
+def writeBits(number):
+	
 	bytes_to_write = number/4
 	remainder = number%4
 	if value == 1:
@@ -31,7 +35,25 @@ def writeBits
 		new_file.write(0x0)
 	return
 
-def changeValue
+
+def changeValue():
+    if newValue == 0 :
+        if remainder == 1:
+            new_file.write(change_1^0x0)
+        elif remainder == 2:
+            new_file.write(change_2^0x0)
+        elif remainder ==3:
+            new_file.write(change_3^0x0)
+    else :
+        if remainder == 1:
+            new_file.write(change_1^0xF)
+        elif remainder == 2:
+            new_file.write(change_1^0xF)
+        elif remainder ==3:
+            new_file.write(change_1^0xF)
+    value = newValue
+    writeBits(n-(4-remainder))
+
 #file_length_binary = file_size * 8
 
 mask_1 = 0b1000
@@ -51,7 +73,7 @@ with open(original_file, "rb") as f:
     	if newValue == value : 
     		writeBits()
     	else:
-    		changeValue()
+    		changeValue(n)
 
         # Do stuff with byte.
         byte = f.read(1)
