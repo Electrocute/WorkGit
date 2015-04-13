@@ -26,14 +26,14 @@ old_file = open(original_file, 'wb');
 new_file = open(final_product, 'wb');
 
 def writeBits(number):
-	
-	bytes_to_write = number/4
-	remainder = number%4
-	if value == 1:
-		new_file.write(0xF)
-	else:
-		new_file.write(0x0)
-	return
+    
+    bytes_to_write = number/4
+    remainder = number%4
+    if value == 1:
+        new_file.write(0xF)
+    else:
+        new_file.write(0x0)
+    return
 
 
 def changeValue():
@@ -65,15 +65,16 @@ value = 0
 with open(original_file, "rb") as f:
     byte = f.read(1)
     while byte:
-    	new_byte = byte && mask_1
-    	if (new_byte > 0 ):
-    		newValue = 1
-    	else :
-    		newValue = 0
-    	if newValue == value : 
-    		writeBits()
-    	else:
-    		changeValue(n)
+        new_byte = byte & mask_1
+        if (new_byte > 0 ):
+            newValue = 1
+        else :
+            newValue = 0
+        if newValue == value : 
+            number_to_write = n+remainder
+            writeBits(number_to_write)
+        else:
+            changeValue()
 
         # Do stuff with byte.
         byte = f.read(1)
@@ -81,4 +82,4 @@ with open(original_file, "rb") as f:
 
 
 
-new_file_binary.tofile(new_file)
+#new_file_binary.tofile(new_file)
