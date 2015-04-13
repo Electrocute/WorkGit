@@ -2,9 +2,9 @@ import filecmp
 import os
 from bitstring import Bits, BitStream, BitArray
 
-original_file = input("Enter the file with path you wish to over sample: ");
+original_file = input("Enter the file you wish to over sample: ");
 print("the file you want to oversample is:", original_file);
-final_product = input("Enter the oversampled file with path: ");
+final_product = input("Enter the oversampled file: ");
 print("The oversampled product of ", original_file, " is stored in ", final_product);
 #file_size = input( "Enter the size of the file in bytes: ")
 n = 0
@@ -22,18 +22,21 @@ change_3 = 0b1110
 remainder = 0
 value = 0
 
-old_file = open(original_file, 'wb');
+#old_file = open(original_file, 'rb');
 new_file = open(final_product, 'wb');
 
 def writeBits(number):
     
     bytes_to_write = number/4
     remainder = number%4
-    if value == 1:
-        new_file.write(0xF)
-    else:
-        new_file.write(0x0)
-    return
+    if bytes_to_write>1:
+        i = 1
+        for i in range(bytes_to_write):
+            if value == 1:
+                new_file.write(0xF)
+            else:
+                new_file.write(0x0)
+            return
 
 
 def changeValue():
@@ -56,10 +59,10 @@ def changeValue():
 
 #file_length_binary = file_size * 8
 
-mask_1 = 0b1000
-mask_2 = 0b0100
-mask_3 = 0b0010 
-mask_4 = 0b0001 
+mask_1 = 0x8  # 0b1000
+mask_2 = 0x4  # 0b0100
+mask_3 = 0x2  # 0b0010 
+mask_4 = 0x1  # 0b0001 
 remainder = 0
 value = 0
 with open(original_file, "rb") as f:
@@ -82,4 +85,4 @@ with open(original_file, "rb") as f:
 
 
 
-#new_file_binary.tofile(new_file)
+#new_file.tofile(final_product)
