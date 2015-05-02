@@ -1,6 +1,5 @@
 import filecmp
 import os
-from bitstring import Bits, BitStream, BitArray
 
 from struct import *
 
@@ -60,6 +59,7 @@ def changeValue(newValue, remainder):
         return
     if remainder == 1:
         if newValue ==0 :
+            
             new_file.write(change_1^0x00)
         else:
             new_file.write(change_1^0xFF)
