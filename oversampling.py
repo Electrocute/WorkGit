@@ -47,59 +47,58 @@ def writeBits(number, write_value):
                 new_file.write(b'\xFF')
                 print("writing FF")
         return(remainder)
-
-
+    return(remainder)
+    
+write_remainder = [1]
 def changeValue(newValue, remainder):
     print("changing value")
     print("the remainder is: ", remainder)
     if(remainder == 0):
         value = newValue
         print("changed value to", value)
-        writeBits(int(n), int(value))
-        return
+        remainder = writeBits(int(n), int(value))
+        return(remainder)
     if remainder == 1:
         if newValue ==0 :
             
-            new_file.write(change_1^0x00)
+            new_file.write(b'\x80')
         else:
-            new_file.write(change_1^0xFF)
+            new_file.write(b'\x7F')
     elif remainder == 2:
         if newValue ==0 :
-            new_file.write(change_2^0x00)
+            new_file.write(b'\xC0')
         else:
-            new_file.write(change_2^0xFF)
+            new_file.write(b'\x3F')
     elif remainder ==3:
         if newValue ==0 :
-            new_file.write(change_3^0x00)
+            new_file.write(b'\xE0')
         else:
-            new_file.write(change_3^0xFF)
+            new_file.write(b'\x1F')
     elif remainder == 4:
         if newValue ==0 :
-            new_file.write(change_4^0x00)
+            new_file.write(b'\xF0')
         else:
-            new_file.write(change_4^0xFF)
+            new_file.write(b'\x0F')
     elif remainder ==5:
         if newValue ==0 :
-            new_file.write(change_5^0x00)
-            print(change_5^0x00, "is the change byte")
+            new_file.write(b'\xF8')
         else:
-            new_file.write(change_5^0xFF)
-            print(change_5^0xFF, "is the change byte")
+            new_file.write(b'\x07')
     elif remainder == 6:
         if newValue ==0 :
-            new_file.write(change_6^0x00)
+            new_file.write(b'\xFC')
         else:
-            new_file.write(change_6^0xFF)
+            new_file.write(b'\x03')
     elif remainder ==7:
         if newValue ==0 :
-            new_file.write(change_7^0x00)
+            new_file.write(b'\xFE')
         else:
-            new_file.write(change_7^0xFF)
+            new_file.write(b'\x01')
     
     value = newValue
     print("changed value to", value)
     to_write = int(n)-(8-int(remainder))
-    remainder = writeBits(to_write)
+    remainder = writeBits(to_write, value)
     return(remainder)
 
 #file_length_binary = file_size * 8
@@ -114,15 +113,14 @@ mask_7 = 0x02  # 0b0010
 mask_8 = 0x01  # 0b0001 
 
 newValue = 0
-
+#int(temp_remainder) = 0
 def processByte(new_byte, remainder):
     if (new_byte > 0 ):
         newValue = 1
     else :
         newValue = 0 
     if newValue == value : 
-        temp_remainder = remainder
-        number_to_write = int(n) + int(temp_remainder)
+        number_to_write = int(n) + int(remainder)
         remainder = writeBits(number_to_write, value)
     else:
         remainder = changeValue(newValue, remainder)
