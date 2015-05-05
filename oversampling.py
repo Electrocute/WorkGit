@@ -31,9 +31,10 @@ value = 0
 new_file = open(final_product, 'wb');
 
 def writeBits(number, write_value):
+    global remainder 
     print("number to write: ", number, "with value of: ", write_value)
     bytes_to_write = number/8
-    global remainder = number%8
+    remainder = number%8
     print("remainder is: ", remainder)
     bytes_to_write = int(bytes_to_write)
     print("Bytes to write:  ", bytes_to_write)
@@ -51,12 +52,15 @@ def writeBits(number, write_value):
     
 write_remainder = [1]
 def changeValue(newValue):
+    global value
+    global remainder
+    global n
     print("changing value")
     print("the remainder is: ", remainder)
     if(remainder == 0):
-        global value = newValue
+        value = newValue
         print("changed value to", value)
-        global remainder = writeBits(int(n), int(value))
+        writeBits(int(n), int(value))
         return
     if remainder == 1:
         if newValue ==0 :
@@ -95,9 +99,11 @@ def changeValue(newValue):
         else:
             new_file.write(b'\x01')
     
-    global value = newValue
+    value = newValue
     print("changed value to", value)
-    to_write = int(n)-(8-int(remainder))
+    print(n)
+    print(remainder)
+    to_write = int(n)-(8-remainder)
     writeBits(to_write, value)
     return
 
@@ -115,12 +121,14 @@ mask_8 = 0x01  # 0b0001
 newValue = 0
 #int(temp_remainder) = 0
 def processByte(new_byte):
+    global remainder
+    global value
     if (new_byte > 0 ):
         newValue = 1
     else :
         newValue = 0 
     if newValue == value : 
-        number_to_write = int(n) + int(remainder)
+        number_to_write = int(n) + remainder
         writeBits(number_to_write, value)
     else:
         changeValue(newValue)
